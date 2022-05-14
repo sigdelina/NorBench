@@ -5,6 +5,8 @@ In this section, attempts of adaptation of various approaches to solving the WSD
 
 At the moment: trying to run the solution from [this article](https://arxiv.org/pdf/2009.11795.pdf) for dataset prepared from the Norwegian Wordnet dataset. Files with adapted code (some changes of [original code](https://github.com/BPYap/BERT-WSD)) were uploaded.
 
+Statistics for Dataset can be found in the file by the [link](https://colab.research.google.com/drive/1GIfCwGhKFSmQCa9P_EAx1uL7xzNTTjW0?usp=sharing). 
+
 
 Link to the article| Metric | Score
 |---|---|---|
