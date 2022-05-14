@@ -272,13 +272,6 @@ def main():
         type=str,
         help="Cache directory to store the pre-trained models downloaded from s3.",
     )
-    # parser.add_argument(
-    #     "--max_seq_length",
-    #     default=128,
-    #     type=int,
-    #     help="The maximum total input sequence length after tokenization. Sequences longer "
-    #          "than this will be truncated, sequences shorter will be padded.",
-    # )
 
     parser.add_argument(
         "--per_gpu_train_batch_size",
@@ -396,31 +389,12 @@ def main():
         action="store_true",
         help="Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit",
     )
-    # parser.add_argument(
-    #     "--fp16_opt_level",
-    #     type=str,
-    #     default="O1",
-    #     help="For fp16: Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3']."
-    #          "See details at https://nvidia.github.io/apex/amp.html",
-    # )
     parser.add_argument(
         "--local_rank",
         default=-1,
         type=int,
         help="For distributed training: local_rank"
     )
-    # parser.add_argument(
-    #     "--server_ip",
-    #     default="",
-    #     type=str,
-    #     help="For distant debugging."
-    # )
-    # parser.add_argument(
-    #     "--server_port",
-    #     default="",
-    #     type=str,
-    #     help="For distant debugging."
-    # )
     args = parser.parse_args()
 
     max_seq_length = get_max_sequence(args.train_path)
