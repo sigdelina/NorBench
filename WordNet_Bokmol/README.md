@@ -15,7 +15,7 @@ Link to the article|Comments|
 
 Model|Tests|Metric|Scores on validation set
 |---|---|---|---|
-Norbert2	|call synsets 8 batch	|F1-score weighted |0.5302670004171881
+Norbert2	|all synsets 8 batch	|F1-score weighted |0.5302670004171881
 Norbert2	|all synsets 32 batch	|F1-score weighted|0.5248100112931152
 Norbert2	|no compounds 8 batch	|F1-score weighted|0.7951152866046483
 Norbert2	|no compounds 32 batch	|F1-score weighted|0.8012218035059085
