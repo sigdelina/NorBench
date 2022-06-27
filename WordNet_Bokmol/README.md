@@ -15,6 +15,7 @@ Link to the article|Comments|
 
 Model|Tests|Metric|Scores on validation set
 |---|---|---|---|
+MFS baseline	|most frequent sense based on cos-similarity	|F1-score weighted |0.5197269130989843
 Norbert2	|all synsets 8 batch	|F1-score weighted |0.5302670004171881
 Norbert2	|all synsets 32 batch	|F1-score weighted|0.5248100112931152
 Norbert2	|no compounds 8 batch	|F1-score weighted|0.7951152866046483
