@@ -6,7 +6,6 @@ import tensorflow as tf
 import logging
 import glob
 from utils.utils import read_conll
-from utils.model_utils import models, transofrmers
 
 
 class MBERTTokenizer(BertTokenizer):
