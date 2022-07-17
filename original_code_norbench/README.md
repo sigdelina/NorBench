@@ -1,6 +1,6 @@
 # Updated code from NorBench
 
-1. [ ] Implementing XLM-R model for POS-tagging task for Bokmål and Nyrnorsk 
+1. [x] Implementing XLM-R model for POS-tagging task for Bokmål and Nyrnorsk 
 
 2. [ ] Updating script for automatical choosing model and classifier for the current task (POS, sentiment)
 
