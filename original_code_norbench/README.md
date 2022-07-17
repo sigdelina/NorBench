@@ -1,10 +1,10 @@
 # Updated code from NorBench
 
-1. [x] Implementing XLM-R model for POS-tagging task for Bokmål and Nyrnorsk 
+1. [x] Implementing XLM-R model for POS-tagging task for Bokmål and Nynorsk 
 
 2. [ ] Updating script for automatical choosing model and classifier for the current task (POS, sentiment)
 
-3. [ ] Implementing XLM-R model for sentimenr task
+3. [ ] Implementing XLM-R model for sentiment task
 
 
 P.S. [Original code](https://github.com/ltgoslo/NorBERT/tree/main/benchmarking) is here.
