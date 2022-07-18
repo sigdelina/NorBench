@@ -145,13 +145,14 @@ if __name__ == "__main__":
     parser.add_argument("--model_name", default="norbert")
     parser.add_argument("--short_model_name", default="ltgoslo/norbert")
     parser.add_argument("--use_class_weights", action="store_true")
+    parser.add_argument("--training_language", default="no")
     parser.add_argument("--epochs", type=int, default=10)
 
     args = parser.parse_args()
     print(args)
 
     data_dir = "../data/sentiment/"
-    training_language = "nop"
+    training_language = args.training_language
     model_name = args.model_name
     model_identifier = args.short_model_name
 
