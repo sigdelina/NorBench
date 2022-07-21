@@ -6,6 +6,8 @@
 
 3. [ ] Updating script for automatical choosing model and classifier for the current task (POS, sentiment)
 
+4. [ ] Implementing XLM-R model for NER task
+
 
 P.S. [Original code](https://github.com/ltgoslo/NorBERT/tree/main/benchmarking) is here.
 
