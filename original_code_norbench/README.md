@@ -6,7 +6,9 @@
 
 3. [ ] Updating script for automatical choosing model and classifier for the current task (POS, sentiment)
 
-4. [ ] Implementing XLM-R model for NER task
+4. [ ] Trying several more models for current tasks
+
+5. [ ] Implementing XLM-R model for NER task
 
     * Scores for NER task were obtained (the code differs from the origianl one and more suitable to one of the [oroginal scripts](https://github.com/sigdelina/NorBench/blob/main/original_code_norbench/experiments/ner.py)) -- organizing the script common with script of POS-tagging nad binary Sentimnet analysis is in progress.
 
