@@ -11,7 +11,7 @@ from data_preparation.data_preparation_pos import *
 print(MBERTTokenizer)
 
 models = {
-    "mbert": {
+    "bert": {
         "pos": TFBertForTokenClassification.from_pretrained,
         "sentiment": TFBertForSequenceClassification.from_pretrained
     },
@@ -22,7 +22,7 @@ models = {
 }
 
 tokenizers = {
-    "mbert": {
+    "bert": {
         "pos": MBERTTokenizer.from_pretrained,
         "sentiment": BertTokenizer.from_pretrained
     },
@@ -43,25 +43,54 @@ def get_full_model_names(short_model_name):
         "bert-base-multilingual-cased": "bert-base-multilingual-cased",
         "tf-xlm-roberta-base": "jplu/tf-xlm-roberta-base",
         "mbert": "bert-base-multilingual-cased",
-        "xlm-roberta": "tf-xlm-roberta-base"
+        "norbert1": "ltgoslo/norbert1",
+        "norbert2": "ltgoslo/norbert2",
+        "xlm-roberta-base": "xlm-roberta-base",
+        "xlm-roberta": "xlm-roberta-base"
     }
+
     if short_model_name in d.values():
         # In case the long model name (eg. 'tf-xlm-roberta-base' is given)
         # Return only the full name
-        return d[short_model_name]
+        return d[short_model_name] if short_model_name in d else short_model_name
+
     else:
-        model_name = d[short_model_name]
-        return model_name, d[model_name]
+
+        if short_model_name in d:
+          model_name = d[short_model_name]
+          return d[model_name] if model_name in d else model_name
+         
+        else:
+          return short_model_name
 
 
-def create_model(short_model_name, task, num_labels):
-    return (models[short_model_name][task](get_full_model_names(short_model_name)[1],
-                                           num_labels=num_labels),
-            get_tokenizer(short_model_name, task))
+# def create_model(short_model_name, task, num_labels):
+#     return (models[short_model_name][task](get_full_model_names(short_model_name)[1],
+#                                            num_labels=num_labels),
+#             get_tokenizer(short_model_name, task))
 
 
-def get_tokenizer(short_model_name, task):
-    return tokenizers[short_model_name][task](get_full_model_names(short_model_name)[1])
+# def get_tokenizer(short_model_name, task):
+#     return tokenizers[short_model_name][task](get_full_model_names(short_model_name)[1])
+
+def get_name_from_dict_keys(short_model_name):
+    return 'xlm-roberta' if 'roberta' in short_model_name else 'bert'
+
+
+def create_model(short_model_name, task, num_labels, from_pt=False):
+    short_name =  get_name_from_dict_keys(short_model_name)
+    model = models[short_name][task](get_full_model_names(short_model_name), num_labels=num_labels)
+    tokenizer = get_tokenizer(short_model_name, task)
+    return model, tokenizer
+
+
+
+def get_tokenizer(short_model_name, task, do_lower_case=False):
+    short_name =  get_name_from_dict_keys(short_model_name)
+    try:
+      return tokenizers[short_name][task](get_full_model_names(short_model_name))
+    except:
+      return tokenizers[short_name][task](get_full_model_names(short_model_name), do_lower_case)
 
 
 def compile_model(model, learning_rate):
