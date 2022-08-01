@@ -122,55 +122,19 @@ class Trainer:
                     tagset=None, eval_batch_size=32):
         
 
-        identifier_model_tokenizer = 'xlm-roberta' if 'roberta' in self.model_name else 'mbert'
+
+        self.model, self.tokenizer = model_utils.create_model(self.model_name,  self.task, num_labels=num_labels)
+        # identifier_model_tokenizer = 'xlm-roberta' if 'roberta' in self.model_name else 'mbert'
 
 
-        self.model = model_utils.models[identifier_model_tokenizer][self.task](self.model_name,
-                                                           num_labels=num_labels)
-
-
-        self.tokenizer = model_utils.tokenizers[identifier_model_tokenizer][self.task](self.model_name,  
-                                                                                           do_lower_case=False)
-
-        # if self.task == "pos":
-            
-        #     # print(self.model_name)
-        #     # print(num_labels)
-
-        #     if 'xlm-roberta' in self.model_name:
-                
-        #         self.model = TFXLMRobertaForTokenClassification.from_pretrained(self.model_name,
+        # self.model = model_utils.models[identifier_model_tokenizer][self.task](self.model_name,
         #                                                    num_labels=num_labels)
 
-        #         self.tokenizer = XLMRTokenizer.from_pretrained(self.model_name)
+
+        # self.tokenizer = model_utils.tokenizers[identifier_model_tokenizer][self.task](self.model_name,  
+        #                                                                                 do_lower_case=False)
 
 
-        #     else: 
-        #         self.model = TFBertForTokenClassification.from_pretrained(self.model_name,
-        #                                                                 num_labels=num_labels,
-        #                                                                 from_pt=True)
-
-
-        #         self.tokenizer = MBERTTokenizer.from_pretrained(self.model_name, do_lower_case=False)
-
-
-        # else:
-
-        #     if 'xlm-roberta' in self.model_name:
-                
-        #          self.model = TFXLMRobertaForSequenceClassification.from_pretrained(self.model_name,
-        #                                                                     num_labels=num_labels,
-        #                                                                     from_pt=True)
-                
-
-        #     else:
-
-        #         self.model = TFBertForSequenceClassification.from_pretrained(self.model_name,
-        #                                                                     num_labels=num_labels,
-        #                                                                     from_pt=True)
-        #         self.tokenizer = BertTokenizer.from_pretrained(self.model_name, do_lower_case=False)
-        
-        # print(self.model)
         self.model = model_utils.compile_model(self.model, learning_rate)
         print("Successfully built", self.model_name)
         self.max_length = max_length
@@ -237,6 +201,7 @@ class Trainer:
         for dataset_name in tqdm(dataset_names):
             # Load plain data and TF dataset
             if self.task == "pos":
+                print(self.lang_path, )
                 data, dataset = data_preparation_pos.load_dataset(
                     self.lang_path, self.tokenizer, self.max_length,
                     tagset=self.tagset, dataset_name=dataset_name
