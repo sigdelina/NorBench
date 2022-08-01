@@ -43,7 +43,8 @@ def get_full_model_names(short_model_name):
         "bert-base-multilingual-cased": "bert-base-multilingual-cased",
         "tf-xlm-roberta-base": "jplu/tf-xlm-roberta-base",
         "mbert": "bert-base-multilingual-cased",
-        "norbert1": "ltgoslo/norbert1",
+        "norbert": "ltgoslo/norbert",
+        "norbert1": "ltgoslo/norbert",
         "norbert2": "ltgoslo/norbert2",
         "xlm-roberta-base": "xlm-roberta-base",
         "xlm-roberta": "xlm-roberta-base"
