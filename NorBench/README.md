@@ -117,4 +117,18 @@ python3 pos_sentiment.py --model_name $NAME_OF_MODEL_1 --short_model_name $NAME_
 
 ### Named Entitiy Recognition Task
 
+!!! A fully assembled file in the specified format is being finalized (it will be ready by Monday, errors are possible now).
 
+The previous version for this task is located at the [link](https://github.com/sigdelina/NorBench/tree/main/XLM-R%20model/ner).
+
+---
+
+The input of the model is: 
+
+* `--model_type` - type of the model that one want to run (`bert`, `roberta`)
+* `--model_name` - the name of the model can be presented in several ways.
+  +  in get_full_model_names, the user can add a convenient abbreviation for the model name (if a specific model is not yet in the list): `xlm-roberta`
+  + the model name can be submitted as a full model name mentinoed in transformer library: `xlm-roberta-base`
+* `--dataset` - the part of name of the output file
+* `--training_language` - as NER task was analyzed for both Norwegian Bokmål and Norwegian Nynorsk, then `nob` or `nyr` should be used respectively
+* `--epochs` - number of trainable epochs (`20` as default)
