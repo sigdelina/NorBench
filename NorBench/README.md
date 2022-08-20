@@ -119,7 +119,7 @@ python3 pos_sentiment.py --model_name $NAME_OF_MODEL_1 --short_model_name $NAME_
 
 !!! A fully assembled file in the specified format is being finalized (it will be ready by Monday, errors are possible now).
 
-The previous version for this task is located at the [link](https://github.com/sigdelina/NorBench/tree/main/XLM-R%20model/ner).
+The previous version for this task for `xlm-roberta-base` is located at the [link](https://github.com/sigdelina/NorBench/tree/main/XLM-R%20model/ner), while the version for `bert` is located by the [link]().
 
 ---
 
