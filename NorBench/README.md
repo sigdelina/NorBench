@@ -11,7 +11,9 @@ In the current documentation information about 3 of 4 tasks is provided in detai
 + [Part-Of-Speech tagging task](#POS)
   - [Parameters](#POS_PARAMS)
   - [How to run the training script](#POS_SCRIPT)
-+ [Fine-grained Sentiment Analysis task](#FINEGRAINED) -- detaoled information about the current task is provided in the repository by link in the section
+  - [Evaluation](#POS_EVAL)
+  - [Available Models](#POS_MODELS)
++ [Fine-grained Sentiment Analysis task](#FINEGRAINED) -- detailed information about the current task is provided in the repository by link in the section
 + [Binary Snetiment Analysis task](#BINARYSENT)
 + [Named Entity Recognition task](#NER)
 
@@ -91,6 +93,12 @@ The input of the model is:
 
 #### <a name="POS_SCRIPT"></a> Running script
 
+
+Scripts could be run on the [SAGA SIGMA](https://documentation.sigma2.no/index.html)
+
+In order to run the script on Saga, it is necessary to put arguments for [parameters](#POS_PARAMS) in the form indicated below.
+
+
 Trial `.slurm` file could be found in [experiments](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/slurm_example_nbbert_pos.slurm) folder
 
 ```
@@ -98,12 +106,29 @@ python3 pos_finetuning.py --model_name $NAME_OF_MODEL_1 --short_model_name $NAME
 
 ```
 
-#### Models that have been successfully tested on this script
+#### <a name="POS_EVAL"></a>  Evaluation
 
-#### Models that have been successfully tested on this script
+Currently, this script can work with bert-like-models, distillers, and xlm-roberta models.
+
+The use of other models in this benchmark is in the process of being resolved.
 
 
-this section describes the models for which it was possible to successfully obtain scores.
+#### <a name="POS_MODELS"></a>  Models that have been successfully tested on this script
+
+Currently, this script can work with Bert-Like-Models, DistilBert, and Xlm-Roberta models.
+
+The use of other models in this benchmark is in the process of being resolved.
+
+The list below describes the models for which it was possible to successfully obtain scores until now:
+
+- mBERT: `bert-base-multilingual-cased`
+- XLM-R: `xlm-roberta-base`
+- NorBERT: `ltgoslo/norbert`
+- NorBERT2: `ltgoslo/norbert2`
+- NB-BERT-Base: `NbAiLab/nb-bert-base`
+- Notram: `NbAiLab/notram-bert-norwegian-uncased-080321`
+- Distilbert: `distilbert-base-uncased` -- there is little sense in using this model, however, an attempt was made to launch 
+- ScandiBERT: `vesteinn/ScandiBERT` -- IN PROGRESS
 
 ---
 
@@ -133,6 +158,10 @@ The input of the model is:
 
 
 #### Running script
+
+Scripts are run on the [SAGA SIGMA](https://documentation.sigma2.no/index.html)
+
+In order to run the script on Saga, it is necessary to put arguments for [parameters]#POS_PARAMS() in the form indicated below.
 
 Trial `.slurm` file could be found in [experiments](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/slurm_example_nbbert_sentiment.slurm) folder
 
