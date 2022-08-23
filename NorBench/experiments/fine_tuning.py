@@ -105,8 +105,6 @@ class Trainer:
         self.training_lang = training_lang
         self.data_path = data_path
         self.lang_path = data_path + training_lang + "/"
-        # self.lang_path = data_path + 'no_bokmaal-ud-'
-        print('LANG_PATH ', self.lang_path)
         self.task = task
         if self.task == "pos":
             self.eval_info = {}
@@ -123,7 +121,6 @@ class Trainer:
                     tagset=None, eval_batch_size=32):
         
 
-        print(self.model_name)
         self.model, self.tokenizer = model_utils.create_model(self.model_name,  self.task, num_labels=num_labels)
         self.model = model_utils.compile_model(self.model, learning_rate)
         print("Successfully built", self.model_name)
@@ -193,7 +190,7 @@ class Trainer:
             if self.task == "pos":
                 print(self.lang_path, )
                 data, dataset = data_preparation_pos.load_dataset(
-                    self.lang_path, self.tokenizer, self.max_length,
+                    self.lang_path, self.tokenizer, self.model, self.max_length,
                     tagset=self.tagset, dataset_name=dataset_name
                 )
                 if dataset_name != "train":
@@ -206,7 +203,7 @@ class Trainer:
                 self.balanced = balanced
                 self.limit = limit
                 data, dataset = data_preparation_sentiment.load_dataset(
-                    self.lang_path, self.tokenizer, self.max_length,
+                    self.lang_path, self.tokenizer, self.model, self.max_length,
                     balanced=balanced, limit=limit, dataset_name=dataset_name
                 )
             if dataset_name == "train":
