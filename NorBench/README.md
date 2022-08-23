@@ -15,6 +15,10 @@ In the current documentation information about 3 of 4 tasks is provided in detai
   - [Available Models](#POS_MODELS)
 + [Fine-grained Sentiment Analysis task](#FINEGRAINED) -- detailed information about the current task is provided in the repository by link in the section
 + [Binary Snetiment Analysis task](#BINARYSENT)
+  - [Parameters](#BINARYSENT_PARAMS)
+  - [How to run the training script](#BINARYSENT_SCRIPT)
+  - [Evaluation](#BINARYSENT_EVAL)
+  - [Available Models](#BINARYSENT_MODELS)
 + [Named Entity Recognition task](#NER)
 
 
@@ -142,6 +146,8 @@ The code and overall discription for the current task can be found by the [link]
 
 For this task, [script](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/sentiment_finetuning.py) `sentiment_finetuning.py` should be used.
 
+#### <a name="BINARYSENT_PARAMS"></a>  Parameters
+
 The input of the model is:
 
 * `--model_name` - the name of the model with which the user intends to save the output file
@@ -157,7 +163,7 @@ The input of the model is:
 * `--epochs` - number of trainable epochs (`10` as default)
 
 
-#### Running script
+#### <a name="BINARYSENT_SCRIPT"></a> Running script
 
 Scripts are run on the [SAGA SIGMA](https://documentation.sigma2.no/index.html)
 
@@ -166,8 +172,16 @@ In order to run the script on Saga, it is necessary to put arguments for [parame
 Trial `.slurm` file could be found in [experiments](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/slurm_example_nbbert_sentiment.slurm) folder
 
 ```
-python3 pos_sentiment.py --model_name $NAME_OF_MODEL_1 --short_model_name $NAME_OF_MODEL_2 --use_class_weights $WEIGHTED --training_language $LANGUAGE --epochs $EPOCHS
+python3 sentiment_finetuning.py --model_name $NAME_OF_MODEL_1 --short_model_name $NAME_OF_MODEL_2 --use_class_weights $WEIGHTED --training_language $LANGUAGE --epochs $EPOCHS
 ```
+
+#### <a name="BINARYSENT_EVAL"></a>  Evaluation
+
+
+
+#### <a name="BINARYSENT_MODELS"></a>  Models that have been successfully tested on this script
+
+
 
 ---
 
