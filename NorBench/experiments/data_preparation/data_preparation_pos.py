@@ -201,6 +201,7 @@ def load_dataset(lang_path, tokenizer, model, max_length, tagset, dataset_name="
     try:
         dataset = convert_examples_to_tf_dataset(examples=examples, tokenizer=tokenizer, model=model,
                                                             tagset=tagset, max_length=max_length, token_type_ids_input=token_type_ids_input)
+
     except:
         dataset = convert_examples_to_tf_dataset(examples=examples, tokenizer=tokenizer, model=model,
                                                         tagset=tagset, max_length=max_length, token_type_ids_input=False)
@@ -208,4 +209,3 @@ def load_dataset(lang_path, tokenizer, model, max_length, tagset, dataset_name="
 
     return examples, dataset
     # This loops 3 times over the same data, including the convert to TF, could it be done in one?
-
