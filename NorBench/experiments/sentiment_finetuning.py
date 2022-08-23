@@ -33,7 +33,7 @@ def test(training_lang,
     # Checkpoint for best model weights
     test_lang_path = data_path + test_lang
     test_data, test_dataset = data_preparation_sentiment.load_dataset(test_lang_path,
-                                                                      trainer.tokenizer, max_length,
+                                                                      trainer.tokenizer, trainer.model, max_length,
                                                                       short_model_name,
                                                                       dataset_name=split)
     test_dataset, test_batches = model_utils.make_batches(test_dataset, eval_batch_size,
@@ -51,7 +51,7 @@ def train(training_lang,
           short_model_name="ltgoslo/norbert",
           epochs=10,
           use_class_weights=False):
-    # data_path = "../data/sentiment/"
+
     data_path = "../data/sentiment/"
     task = "sentiment"
     checkpoints_path = "checkpoints/"
@@ -93,7 +93,7 @@ def train(training_lang,
 def prepare_test_data(trainer):
     # Load plain data and TF dataset
     data, dataset = data_preparation_sentiment.load_dataset(
-        trainer.lang_path, trainer.tokenizer, trainer.max_length,
+        trainer.lang_path, trainer.tokenizer, trainer.model, trainer.max_length,
         trainer.tagset, dataset_name="test")
     trainer.setup_eval(data, "test")
     dataset, batches = model_utils.make_batches(
@@ -150,10 +150,8 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=10)
 
     args = parser.parse_args()
-    print(args)
 
-    # data_dir = "../data/sentiment/"
-    data_dir = "../data/sentiment/binary"
+    data_dir = "../data/sentiment/"
     training_language = args.training_language
     model_name = args.model_name
     model_identifier = args.short_model_name
