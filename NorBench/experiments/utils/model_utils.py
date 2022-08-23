@@ -1,7 +1,7 @@
 #!/bin/env python3
 
 import tensorflow as tf
-# import sentencepiece
+import sentencepiece
 from transformers import (TFBertForSequenceClassification, BertTokenizer, AutoTokenizer,
                           TFXLMRobertaForSequenceClassification, XLMRobertaTokenizer, TFAutoModelForSequenceClassification,
                           TFBertForTokenClassification, TFXLMRobertaForTokenClassification, TFAutoModelForTokenClassification,
