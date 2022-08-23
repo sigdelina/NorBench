@@ -165,9 +165,10 @@ The input of the model is:
 
 #### <a name="BINARYSENT_SCRIPT"></a> Running script
 
-Scripts are run on the [SAGA SIGMA](https://documentation.sigma2.no/index.html)
+Scripts could be run on the [SAGA SIGMA](https://documentation.sigma2.no/index.html)
 
-In order to run the script on Saga, it is necessary to put arguments for [parameters]#POS_PARAMS() in the form indicated below.
+In order to run the script on Saga, it is necessary to put arguments for [parameters](#BINARYSENT_PARAMS) in the form indicated below.
+
 
 Trial `.slurm` file could be found in [experiments](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/slurm_example_nbbert_sentiment.slurm) folder
 
@@ -177,11 +178,28 @@ python3 sentiment_finetuning.py --model_name $NAME_OF_MODEL_1 --short_model_name
 
 #### <a name="BINARYSENT_EVAL"></a>  Evaluation
 
+F1 score is used to perform the evaluation of the current task. The calculation of the metric takes place inside the script, so the user receives the table with the F1 scores obtained on the validation subset and on the testing data. The table with output scores is automatically stored in the RESULTS folder.
+
+The [final table](http://wiki.nlpl.eu/Vectors/norlm/norbert) includes the results of F1 score on the testing dataset.
 
 
 #### <a name="BINARYSENT_MODELS"></a>  Models that have been successfully tested on this script
 
+Currently, this script can work with Bert-Like-Models, DistilBert, Xlm-Roberta models and models which are supported by AutoModel.from_pretrained by transormers library.
 
+The use of other models in this benchmark is in the process of being resolved.
+
+The list below describes the models for which it was possible to successfully obtain scores until now:
+
+- mBERT: `bert-base-multilingual-cased`
+- XLM-R: `xlm-roberta-base`
+- NorBERT: `ltgoslo/norbert`
+- NorBERT2: `ltgoslo/norbert2`
+- NB-BERT-Base: `NbAiLab/nb-bert-base`
+- Notram: `NbAiLab/notram-bert-norwegian-uncased-080321`
+- XLM: `xlm-mlm-100-1280` -- was selected to test the possibility of launching via AutoModels
+- Distilbert: `distilbert-base-uncased` -- there is little sense in using this model, however, an attempt was made to launch 
+- ScandiBERT: `vesteinn/ScandiBERT` -- IN PROGRESS
 
 ---
 
