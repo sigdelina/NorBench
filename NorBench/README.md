@@ -108,9 +108,9 @@ python3 pos_finetuning.py --model_name $NAME_OF_MODEL_1 --short_model_name $NAME
 
 #### <a name="POS_EVAL"></a>  Evaluation
 
-Currently, this script can work with bert-like-models, distillers, and xlm-roberta models.
+Accuracy is used to perform the evaluation of the current task. The calculation of the metric takes place inside the script, so the user receives the table with the accuracy scores obtained on the validation subset and on the testing data. The table with output scores is automatically stored in the RESULTS folder.
 
-The use of other models in this benchmark is in the process of being resolved.
+The [final table](http://wiki.nlpl.eu/Vectors/norlm/norbert) includes the results of accuracy score on the testing dataset.
 
 
 #### <a name="POS_MODELS"></a>  Models that have been successfully tested on this script
