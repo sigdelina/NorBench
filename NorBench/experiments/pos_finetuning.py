@@ -37,7 +37,7 @@ def test(training_lang,
     # trainer.setup_checkpoint(checkpoints_path)
     trainer.prepare_data()
     test_lang_path = data_path + test_lang
-    test_data, test_dataset = data_preparation_pos.load_dataset(test_lang_path, trainer.tokenizer,
+    test_data, test_dataset = data_preparation_pos.load_dataset(test_lang_path, trainer.tokenizer, trainer.model,
                                                                 max_length, trainer.tagset,
                                                                 dataset_name=split)
     trainer.setup_eval(test_data, split)
@@ -58,12 +58,6 @@ def train(training_lang, short_model_name="ltgoslo/norbert",
     checkpoints_path = "checkpoints/"
 
     trainer = fine_tuning.Trainer(training_lang, data_path, task, short_model_name)
-    # trainer = Trainer(training_lang, data_path, task, short_model_name)
-    print(training_lang)
-    print(data_path)
-    print(task)
-    print(short_model_name)
-    print(run_name)
     
     #
     # Model parameters
@@ -106,7 +100,7 @@ def train(training_lang, short_model_name="ltgoslo/norbert",
 def prepare_test_data(trainer):
     # Load plain data and TF dataset
     data, dataset = data_preparation_pos.load_dataset(
-        trainer.lang_path, trainer.tokenizer, trainer.max_length, trainer.tagset,
+        trainer.lang_path, trainer.tokenizer, trainer.model, trainer.max_length, trainer.tagset,
         dataset_name="test")
     trainer.setup_eval(data, "test")
     dataset, batches = model_utils.make_batches(
@@ -158,16 +152,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", default="norbert")
     parser.add_argument("--short_model_name", default="ltgoslo/norbert")
-    # parser.add_argument("--short_model_name", default="/Users/macbook/Desktop/216")
     parser.add_argument("--training_language", default="nob")
     parser.add_argument("--epochs", type=int, default=10)
 
     args = parser.parse_args()
 
-    print(args.training_language)
-
     training_language = args.training_language
-    
     ud_data_path = "../data/pos/"
     run_name = args.model_name
     model_identifier = args.short_model_name
