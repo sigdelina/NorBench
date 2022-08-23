@@ -4,7 +4,16 @@
 
 
 NorBench is a benchmark for testing language tasks for Norwegian languages.
-At the moment, the benchmark is presented in 4 solved tasks. For each 5 models have already been implemented, and results for them were obtained.
+At the moment, the benchmark is presented in [4 solved tasks](http://wiki.nlpl.eu/Vectors/norlm/norbert). For each at least 5 models have already been implemented, and results for them were obtained.
+
+In the current documentation information about 3 of 4 tasks is provided in details:
+
++ [Part-Of-Speech tagging task](#POS)
+  - [Parameters](#POS_PARAMS)
+  - [How to run the training script](#POS_SCRIPT)
++ [Fine-grained Sentiment Analysis task](#FINEGRAINED) -- detaoled information about the current task is provided in the repository by link in the section
++ [Binary Snetiment Analysis task](#BINARYSENT)
++ [Named Entity Recognition task](#NER)
 
 
 ### Structure
@@ -51,14 +60,21 @@ The structure of `experiments` is following:
        ...
    
    --- pos_finetuning.py
-   --- sentiments_finetuning.py
+   --- sentiment_finetuning.py
    --- ner_finetuning.py
        
 ```
 
-### Part of Speech Tagging Task
+---
+
+### <a name="POS"></a> Part of Speech Tagging Task
+
 
 For this task, [script](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/pos_finetuning.py) `pos_finetuning.py` should be used.
+
+
+
+#### <a name="POS_PARAMS"></a>  Parameters
 
 The input of the model is:
 
@@ -73,7 +89,7 @@ The input of the model is:
 * `--epochs` - number of trainable epochs (`10` as default)
 
 
-#### Running script
+#### <a name="POS_SCRIPT"></a> Running script
 
 Trial `.slurm` file could be found in [experiments](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/slurm_example_nbbert_pos.slurm) folder
 
@@ -82,13 +98,22 @@ python3 pos_finetuning.py --model_name $NAME_OF_MODEL_1 --short_model_name $NAME
 
 ```
 
+#### Models that have been successfully tested on this script
 
-### Fine-grained Sentiment Analysis Task
+#### Models that have been successfully tested on this script
+
+
+this section describes the models for which it was possible to successfully obtain scores.
+
+---
+
+### <a name="FINEGRAINED"></a> Fine-grained Sentiment Analysis Task
 
 The code and overall discription for the current task can be found by the [link](https://github.com/jerbarnes/sentiment_graphs)
 
+---
 
-### Binary Sentiment Analysis Task
+### <a name="BINARYSENT"></a> Binary Sentiment Analysis Task
 
 For this task, [script](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/sentiment_finetuning.py) `sentiment_finetuning.py` should be used.
 
@@ -115,7 +140,9 @@ Trial `.slurm` file could be found in [experiments](https://github.com/sigdelina
 python3 pos_sentiment.py --model_name $NAME_OF_MODEL_1 --short_model_name $NAME_OF_MODEL_2 --use_class_weights $WEIGHTED --training_language $LANGUAGE --epochs $EPOCHS
 ```
 
-### Named Entitiy Recognition Task
+---
+
+### <a name="NER"></a> Named Entitiy Recognition Task
 
 !!! A fully assembled file in the specified format is being finalized (it will be ready by Monday, errors are possible now).
 
