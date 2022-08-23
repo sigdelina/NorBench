@@ -2,6 +2,7 @@
 
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 import tensorflow.keras.backend as backend
 
 
@@ -86,3 +87,15 @@ def ignore_acc(y_true_class, y_pred_class, class_to_ignore=0):
 def get_ud_tags():
     return ["O", "_", "ADJ", "ADP", "ADV", "AUX", "CCONJ", "DET", "INTJ", "NOUN", "NUM",
             "PART", "PRON", "PROPN", "PUNCT", "SCONJ", "SYM", "VERB", "X"]
+
+
+def token_type_model_attr(model, max_length):
+    # if model has token_type_ids as an attribute    
+    try:
+      input_ids = tf.keras.layers.Input(shape=(max_length,), dtype=tf.int32, name="input_ids")
+      attention_mask=tf.keras.layers.Input(shape=(max_length,), dtype=tf.int32, name="attention_mask")
+      token_type_ids=tf.keras.layers.Input(shape=(max_length,), dtype=tf.int32, name="token_type_ids")
+      model_attr = model({'input_ids': input_ids, 'attention_mask': attention_mask, 'token_type_ids': token_type_ids})
+      return True
+    except:
+      return False
