@@ -268,11 +268,11 @@ NOTE: for the current task not F1 score itself is used (not the initial metric).
 The current section provides information about the scores that was obtained from the following scripts.
 
 
-| |mBERT	|XLM-R|	NorBERT	|NorBERT2	|NB-BERT-Base	|Distilbert|Notram|XLM|ScandiBERT
-|---|---|---|---|---|---|---|---|---|---|
-|Part-of-Speech tagging Bokmål (accuracy)|	97.8|	97.6|	98.3|	98.3|	98.6|	95.3||||
-|Part-of-Speech tagging Nynorsk (accuracy)|	97.5|	97.3|	98.1|	97.8|	98.1|	94.8|95.8|||
-|Fine-grained sentiment analysis (Mean Targeted F1 across 5 runs)				|  | | |		|   ||||
-|Binary sentiment analysis (F1 score)|	70.0|	77.5	|79.3|	84.2|	84.0|65.8	|83.2|||
-|NER Bokmål (F1 score)|	|84.5|86.5	|	|	|	||||
-|NER Nynorsk (F1 score)|	|	|	|	|	|	||||
+| |mBERT	|XLM-R|	NorBERT	|NorBERT2	|NB-BERT-Base	|Distilbert|Notram|XLM|ScandiBERT|LaBSE|
+|---|---|---|---|---|---|---|---|---|---|---|
+|Part-of-Speech tagging Bokmål (accuracy)|	97.8|	97.6|	98.3|	98.3|	98.6|	95.3|||||
+|Part-of-Speech tagging Nynorsk (accuracy)|	97.5|	97.3|	98.1|	97.8|	98.1|	94.8|95.8||||
+|Fine-grained sentiment analysis (Mean Targeted F1 across 5 runs)				|  | | |		|   |||||
+|Binary sentiment analysis (F1 score)|	70.0|	77.5	|79.3|	84.2|	84.0|65.8	|83.2||||
+|NER Bokmål (F1 score)|	|84.5|86.5	|	|	|	|||||
+|NER Nynorsk (F1 score)|	|	|	|	|	|	|||||
