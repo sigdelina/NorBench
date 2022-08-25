@@ -1,50 +1,12 @@
 #!/bin/env python3
 
-from transformers import XLMRobertaForTokenClassification, BertForTokenClassification,  XLMRobertaTokenizerFast, BertTokenizer
-
-
-class BERTTokenizer(BertTokenizer):
-    def subword_tokenize(self, tokens, labels):
-        # This propogates the label over any subwords that
-        # are created by the byte-pair tokenization for training
-
-        # IMPORTANT: For testing, you will have to undo this step by combining
-        # the subword elements, and
-
-        split_tokens, split_labels = [], []
-        idx_map = []
-        for ix, token in enumerate(tokens):
-            sub_tokens = self.tokenize(token)
-            for jx, sub_token in enumerate(sub_tokens):
-                split_tokens.append(sub_token)
-                split_labels.append(labels[ix])
-                idx_map.append(ix)
-        return split_tokens, split_labels, idx_map
-
-
-class XLMRTokenizer(XLMRobertaTokenizerFast):
-    def subword_tokenize(self, tokens, labels):
-        # This propogates the label over any subwords that
-        # are created by the byte-pair tokenization for training
-
-        # IMPORTANT: For testing, you will have to undo this step by combining
-        # the subword elements, and
-
-        split_tokens, split_labels = [], []
-        idx_map = []
-        for ix, token in enumerate(tokens):
-            sub_tokens = self.tokenize(token)
-            for jx, sub_token in enumerate(sub_tokens):
-                split_tokens.append(sub_token)
-                split_labels.append(labels[ix])
-                idx_map.append(ix)
-        return split_tokens, split_labels, idx_map
+from transformers import XLMRobertaForTokenClassification, BertForTokenClassification,  XLMRobertaTokenizerFast, BertTokenizer, BertTokenizerFast
 
 
 models_type = {
     "bert": {
         "model": BertForTokenClassification.from_pretrained,
-        "tokenizer": BERTTokenizer.from_pretrained,
+        "tokenizer": BertTokenizerFast.from_pretrained,
         "model_names": {
             "bert-base-multilingual-cased": "bert-base-multilingual-cased",
             "mbert": "bert-base-multilingual-cased",
@@ -55,7 +17,7 @@ models_type = {
     },
     "roberta": {
         "model": XLMRobertaForTokenClassification.from_pretrained,
-        "tokenizer": XLMRTokenizer.from_pretrained,
+        "tokenizer": XLMRobertaTokenizerFast.from_pretrained,
         "model_names": {
             "tf-xlm-roberta-base": "jplu/tf-xlm-roberta-base",
             "xlm-roberta-base": "xlm-roberta-base",
