@@ -20,7 +20,11 @@ In the current documentation information about 3 of 4 tasks is provided in detai
   - [Evaluation](#BINARYSENT_EVAL)
   - [Available Models](#BINARYSENT_MODELS)
 + [Named Entity Recognition task](#NER)
-
+  - [Parameters](#NER_PARAMS)
+  - [How to run the training script](#NER_SCRIPT)
+  - [Evaluation](#NER_EVAL)
+  - [Available Models](#NER_MODELS)
+  
 
 ### Structure
 
@@ -211,6 +215,10 @@ The previous version for this task for `xlm-roberta-base` is located at the [lin
 
 ---
 
+For this task, [script](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/ner_finetuning.py) `ner_finetuning.py` should be used.
+
+#### <a name="NER_PARAMS"></a>  Parameters
+
 The input of the model is: 
 
 * `--model_type` - type of the model that one want to run (`bert`, `roberta`)
@@ -220,3 +228,26 @@ The input of the model is:
 * `--dataset` - the part of name of the output file
 * `--training_language` - as NER task was analyzed for both Norwegian Bokmål and Norwegian Nynorsk, then `nob` or `nyr` should be used respectively
 * `--epochs` - number of trainable epochs (`20` as default)
+
+
+#### <a name="NER_SCRIPT"></a> Running script
+
+
+Scripts could be run on the [SAGA SIGMA](https://documentation.sigma2.no/index.html)
+
+In order to run the script on Saga, it is necessary to put arguments for [parameters](#NER_PARAMS) in the form indicated below.
+
+
+Trial `.slurm` file could be found in [experiments](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/slurm_example_nob_norbert_ner.slurm) folder
+
+```
+python3 ner_finetuning.p --model_type $MODEL_TYPE --model_name $NAME_OF_MODEL_1 --dataset $NAME_OF_DATASET --training_language $LANGUAGE --epochs $EPOCHS
+```
+
+#### <a name="NER_EVAL"></a>  Evaluation
+
+
+
+
+#### <a name="NER_MODELS"></a>  Models that have been successfully tested on this script
+
