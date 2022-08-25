@@ -33,7 +33,7 @@ def compute_metrics(p):
     predictions = np.argmax(predictions, axis=2)
 
     # Remove ignored index (special tokens)
-    true_predictions = [
+    real_predictions = [
         [tagset[p] for (p, l) in zip(prediction, label) if l != -100]
         for prediction, label in zip(predictions, labels)
     ]
@@ -42,7 +42,7 @@ def compute_metrics(p):
         for prediction, label in zip(predictions, labels)
     ]
 
-    results = metric.compute(predictions=true_predictions, references=true_labels)
+    results = metric.compute(predictions=real_predictions, references=true_labels)
     return {
         "precision": results["overall_precision"],
         "recall": results["overall_recall"],
@@ -51,28 +51,18 @@ def compute_metrics(p):
     }
 
 
-def compute_predictions(trainer, tokenized_data, tagset=tagset):
-    "computing predictions with the inner metrics"
+def get_predictions(trainer, tokenized_data, tagset=tagset):
+    "predictions"
     predictions, labels, _ = trainer.predict(tokenized_data["test"])
     predictions = np.argmax(predictions, axis=2)
 
     # Remove ignored index (special tokens)
-    true_predictions = [
+    real_predictions = [
         [tagset[p] for (p, l) in zip(prediction, label) if l != -100]
         for prediction, label in zip(predictions, labels)
     ]
-    true_labels = [
-        [tagset[l] for (p, l) in zip(prediction, label) if l != -100]
-        for prediction, label in zip(predictions, labels)
-    ]
 
-    results = metric.compute(predictions=true_predictions, references=true_labels)
-    return {
-        "precision": results["overall_precision"],
-        "recall": results["overall_recall"],
-        "f1": results["overall_f1"],
-        "accuracy": results["overall_accuracy"],
-    }, true_predictions
+    return real_predictions
 
 
 if __name__ == "__main__":
@@ -136,6 +126,7 @@ if __name__ == "__main__":
     training_args = TrainingArguments(
         output_dir=output_dir,
         overwrite_output_dir=overwrite_output_dir,
+        evaluation_strategy="epoch",
         do_train=True,
         do_eval=True,
         do_predict=True,
@@ -162,7 +153,7 @@ if __name__ == "__main__":
         eval_dataset=tokenized_data["dev"],
         tokenizer=tokenizer,
         data_collator=data_collator,
-        compute_metrics=compute_metrics,
+        # compute_metrics=compute_metrics,
     )
 
     """# Start Training"""
@@ -198,20 +189,18 @@ if __name__ == "__main__":
     """# Run Predictions on the Test Dataset"""
 
     print("**Predict**")
-    predictions, true_predictions = compute_predictions(trainer, tokenized_data)
-
-    print(f"Scores on test dataset: {predictions}")
+    real_predictions = get_predictions(trainer, tokenized_data)
 
     print('PREPARING TO SAVE PREDITIONS')
 
     path_to_test = glob.glob(lang_path + "/*{}.conllu".format('test'.split("_")[0]))[0]
-    path_to_preditions = lang_path+"predicted_{}.conllu".format(training_language)
+    path_to_preditions = lang_path+"predicted_{}_{}.conllu".format(training_language, model_name)
 
     test_conll = parse(open(path_to_test, "r").read())
 
     for nr, sentence in enumerate(test_conll):
         for tk_num, token in enumerate(sentence):
-            token["misc"]["name"] = true_predictions[nr][tk_num]
+            token["misc"]["name"] = real_predictions[nr][tk_num]
 
     with open(path_to_preditions, "w") as f:
         for sentence in test_conll:
@@ -219,12 +208,12 @@ if __name__ == "__main__":
     print('Saving file')
 
     print('Scores:')
-    test_results = evaluate_ner.evaluation(parse(open(path_to_preditions, "r").read()), test_conll)
+    test_results = evaluate_ner.evaluation(path_to_preditions, path_to_test)
 
     table = pd.DataFrame({"Train Lang": training_language,
-                          "Test F1": [test_results[test_results]]
+                          "Test F1": [test_results]
                           })
 
     print(table)
-    print(table.to_latex(index=False, float_format="{0:.1f}".format))
+    print(table.to_latex(index=False, float_format="{0:.5f}".format))
     table.to_csv("results/{}_ner.tsv".format(model_name), sep="\t")
