@@ -1,7 +1,6 @@
 #! python3
 # coding: utf-8
 
-from argparse import ArgumentParser
 from conllu import parse
 from ner_eval import Evaluator
 from smart_open import open
@@ -15,25 +14,6 @@ def f1(precision, recall):
 
 
 def evaluation(predictions, gold):
-    # parser = ArgumentParser()
-    # parser.add_argument(
-    #     "--predictions",
-    #     "-p",
-    #     required=True,
-    #     help="path to a CONLLU file with system predictions",
-    #     default="predictions.conllu",
-    # )
-    # parser.add_argument(
-    #     "--gold",
-    #     "-g",
-    #     help="path to a CONLLU file with gold scores",
-    #     required=True,
-    #     default="norne_test_gold.conllu",
-    # )
-    # args = parser.parse_args()
-
-    # predictions = parse(open(args.predictions, "r").read())
-    # gold = parse(open(args.gold, "r").read())
 
     predictions = parse(open(predictions, "r").read())
     gold = parse(open(gold, "r").read())
