@@ -247,6 +247,14 @@ python3 ner_finetuning.p --model_type $MODEL_TYPE --model_name $NAME_OF_MODEL_1 
 #### <a name="NER_EVAL"></a>  Evaluation
 
 
+F1 score is used to perform the evaluation of the current task. The calculation of the metric takes place inside the script, so the user receives the table with the F1 score scores obtained on the testing data. The table with output scores is automatically stored in the RESULTS folder.
+
+The final table includes the results of F1 score on the testing dataset.
+
+
+NOTE: for the current task not F1 score itself is used (not the initial metric). A special [script](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/ner_eval.py) is used to get the result on the test set where scores are counted for provided labels: `PER`, `ORG`, `LOC`, `GPE_LOC`, `GPE_ORG`, `PROD`, `EVT`, `DRV`. 
+
+
 
 
 #### <a name="NER_MODELS"></a>  Models that have been successfully tested on this script
