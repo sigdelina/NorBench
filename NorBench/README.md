@@ -6,27 +6,28 @@
 NorBench is a benchmark for testing language tasks for Norwegian languages.
 At the moment, the benchmark is presented in [4 solved tasks](http://wiki.nlpl.eu/Vectors/norlm/norbert). For each at least 5 models have already been implemented, and results for them were obtained.
 
-In the current documentation information about 3 of 4 tasks is provided in details:
+* [How repostory is organized](#STRUCT) 
+* In the current documentation information about 3 of 4 tasks is provided in details:
+  + [Part-Of-Speech tagging task](#POS)
+    -- [Parameters](#POS_PARAMS)
+    - [How to run the training script](#POS_SCRIPT)
+    - [Evaluation](#POS_EVAL)
+    - [Available Models](#POS_MODELS)
+  + [Fine-grained Sentiment Analysis task](#FINEGRAINED) -- detailed information about the current task is provided in the repository by link in the section
+  + [Binary Snetiment Analysis task](#BINARYSENT)
+    - [Parameters](#BINARYSENT_PARAMS)
+    - [How to run the training script](#BINARYSENT_SCRIPT)
+    - [Evaluation](#BINARYSENT_EVAL)
+    - [Available Models](#BINARYSENT_MODELS)
+  + [Named Entity Recognition task](#NER)
+    - [Parameters](#NER_PARAMS)
+    - [How to run the training script](#NER_SCRIPT)
+    - [Evaluation](#NER_EVAL)
+    - [Available Models](#NER_MODELS)
+* [Results](#RES)
 
-+ [Part-Of-Speech tagging task](#POS)
-  - [Parameters](#POS_PARAMS)
-  - [How to run the training script](#POS_SCRIPT)
-  - [Evaluation](#POS_EVAL)
-  - [Available Models](#POS_MODELS)
-+ [Fine-grained Sentiment Analysis task](#FINEGRAINED) -- detailed information about the current task is provided in the repository by link in the section
-+ [Binary Snetiment Analysis task](#BINARYSENT)
-  - [Parameters](#BINARYSENT_PARAMS)
-  - [How to run the training script](#BINARYSENT_SCRIPT)
-  - [Evaluation](#BINARYSENT_EVAL)
-  - [Available Models](#BINARYSENT_MODELS)
-+ [Named Entity Recognition task](#NER)
-  - [Parameters](#NER_PARAMS)
-  - [How to run the training script](#NER_SCRIPT)
-  - [Evaluation](#NER_EVAL)
-  - [Available Models](#NER_MODELS)
-  
 
-### Structure
+### <a name="STRUCT"></a> Structure 
 
 The current repository contains the `experiments` folder with run scripts and `data` folder with training, vaidation, and test sets 
 
@@ -259,3 +260,19 @@ NOTE: for the current task not F1 score itself is used (not the initial metric).
 
 #### <a name="NER_MODELS"></a>  Models that have been successfully tested on this script
 
+
+
+
+### <a name="RES"></a> Results
+
+The current section provides information about the scores that was obtained from the following scripts.
+
+
+| |mBERT	|XLM-R|	NorBERT	|NorBERT2	|NB-BERT-Base	|Distilbert|Notram|XLM|ScandiBERT
+|---|---|---|---|---|---|---|---|---|---|
+|Part-of-Speech tagging Bokmål (accuracy)|	97.8|	97.6|	98.3|	98.3|	98.6|	95.3||||
+|Part-of-Speech tagging Nynorsk (accuracy)|	97.5|	97.3|	98.1|	97.8|	98.1|	94.8|95.8|||
+|Fine-grained sentiment analysis (Mean Targeted F1 across 5 runs)				|  | | |		|   ||||
+|Binary sentiment analysis (F1 score)|	70.0|	77.5	|79.3|	84.2|	84.0|65.8	|83.2|||
+|NER Bokmål (F1 score)|	|84.5|86.5	|	|	|	||||
+|NER Nynorsk (F1 score)|	|	|	|	|	|	||||
