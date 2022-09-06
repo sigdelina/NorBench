@@ -274,5 +274,5 @@ The current section provides information about the scores that was obtained from
 |Part-of-Speech tagging Nynorsk (accuracy)|	97.5|	97.3|	98.1|	97.8|	98.1|	94.8|95.8||97.6||
 |Fine-grained sentiment analysis (Mean Targeted F1 across 5 runs)				|  | | |		|   |||||
 |Binary sentiment analysis (F1 score)|	70.0|	77.5	|79.3|	84.2|	84.0|65.8	|83.2||81.1||
-|NER Bokmål (F1 score)|	79.6|84.5|86.5	|85.8	|	|	|||||
-|NER Nynorsk (F1 score)|	|	|	|	|	|	|||||
+|NER Bokmål (F1 score)|	79.6|84.5|86.5	|85.8	|	|	|||88.7||
+|NER Nynorsk (F1 score)|	|	|	|	|	|	|||88.2||
