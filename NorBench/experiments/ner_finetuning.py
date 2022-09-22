@@ -72,6 +72,7 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", default="norne_nob")
     parser.add_argument("--training_language", default="nob")
     parser.add_argument("--epochs", type=int, default=20)
+    parser.add_argument("--use_seqeval_evaluation", type=bool, default=False)
     args = parser.parse_args()
 
     ner_data_path = "../data/ner/"
@@ -81,7 +82,6 @@ if __name__ == "__main__":
     dataset_name = args.dataset
     task_name = "ner"
     training_language = args.training_language
-    print(training_language)
     lang_path = ner_data_path + training_language + "/"
 
     overwrite_cache = True
@@ -112,14 +112,17 @@ if __name__ == "__main__":
     overwrite_output_dir = False
 
     """# Initialize Training"""
-    if model_name in models_type[model_type]["model_names"].keys():
-        model = models_type[model_type]["model"](models_type[model_type]["model_names"][model_name], num_labels=len(tagset))
-        tokenizer = models_type[model_type]["tokenizer"](models_type[model_type]["model_names"][model_name])
+    if model_type in models_type:
+        if model_name in models_type[model_type]["model_names"].keys():
+            model = models_type[model_type]["model"](models_type[model_type]["model_names"][model_name], num_labels=len(tagset))
+            tokenizer = models_type[model_type]["tokenizer"](models_type[model_type]["model_names"][model_name])
+        else:
+            model = models_type[model_type]["model"](model_name, num_labels=len(tagset))
+            tokenizer = models_type[model_type]["tokenizer"](model_name)
     else:
         model = AutoModelForTokenClassification.from_pretrained(model_name, num_labels=len(tagset))
         tokenizer = AutoTokenizer.from_pretrained(model_name)
     
-    print(tokenizer)
     # Load the dataset
     tokenized_data, data_collator = data_preparation_ner.collecting_data(tokenizer, lang_path)
 
@@ -146,15 +149,26 @@ if __name__ == "__main__":
     )
 
     # Initialize our Trainer
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=tokenized_data["train"],
-        eval_dataset=tokenized_data["dev"],
-        tokenizer=tokenizer,
-        data_collator=data_collator,
-        # compute_metrics=compute_metrics,
-    )
+    if args.use_seqeval_evaluation == False:
+        trainer = Trainer(
+            model=model,
+            args=training_args,
+            train_dataset=tokenized_data["train"],
+            eval_dataset=tokenized_data["dev"],
+            tokenizer=tokenizer,
+            data_collator=data_collator,
+        )
+    else:
+         trainer = Trainer(
+            model=model,
+            args=training_args,
+            train_dataset=tokenized_data["train"],
+            eval_dataset=tokenized_data["dev"],
+            tokenizer=tokenizer,
+            data_collator=data_collator,
+            compute_metrics=compute_metrics,
+        )
+
 
     """# Start Training"""
 
@@ -191,10 +205,12 @@ if __name__ == "__main__":
     print("**Predict**")
     real_predictions = get_predictions(trainer, tokenized_data)
 
+    # print(f"Scores on test dataset: {predictions}")
+
     print('PREPARING TO SAVE PREDITIONS')
 
     path_to_test = glob.glob(lang_path + "/*{}.conllu".format('test'.split("_")[0]))[0]
-    path_to_preditions = lang_path+"predicted_{}_{}.conllu".format(training_language, model_name)
+    path_to_preditions = lang_path+"predicted_{}_{}.conllu".format(training_language, model_name.replace('/', '_'))
 
     test_conll = parse(open(path_to_test, "r").read())
 
