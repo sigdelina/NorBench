@@ -1,7 +1,6 @@
 #! python3
 # coding: utf-8
 
-from argparse import ArgumentParser
 from conllu import parse
 from ner_eval import Evaluator
 from smart_open import open
