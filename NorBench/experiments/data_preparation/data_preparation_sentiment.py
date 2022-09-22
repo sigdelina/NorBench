@@ -17,6 +17,7 @@ class Example:
 
 def token_type_model_attr(model, max_length):
     # if model has token_type_ids as an attribute
+    print(model)
     
     try:
       input_ids = tf.keras.layers.Input(shape=(max_length,), dtype=tf.int32, name="input_ids")
@@ -146,7 +147,6 @@ def convert_examples_to_tf_dataset(
                 tf.TensorShape([]),
             ),
         )
-
 
 def load_dataset(lang_path, tokenizer, model, max_length, balanced=False,
                  dataset_name="test", limit=None):
