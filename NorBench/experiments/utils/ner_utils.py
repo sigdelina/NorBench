@@ -12,7 +12,8 @@ models_type = {
             "mbert": "bert-base-multilingual-cased",
             "norbert": "ltgoslo/norbert",
             "norbert2": "ltgoslo/norbert2",
-            "nb-bert-base": "NbAiLab/nb-bert-base"
+            "nb-bert-base": "NbAiLab/nb-bert-base",
+            "scandibert": "vesteinn/ScandiBERT",
         }
     },
     "roberta": {
@@ -21,7 +22,7 @@ models_type = {
         "model_names": {
             "tf-xlm-roberta-base": "jplu/tf-xlm-roberta-base",
             "xlm-roberta-base": "xlm-roberta-base",
-        }
+        },
     }
 }
 
