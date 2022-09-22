@@ -290,7 +290,7 @@ The list below describes the models for which it was possible to successfully ob
 
 ### <a name="RES"></a> Results
 
-
+To test more models and obtain the scores for them it was decided to look through [ScandEval](https://scandeval.github.io/pretrained/) benchmark and to test models that were tested there.
 
 The current section provides information about the scores that was obtained from the following scripts.
 
