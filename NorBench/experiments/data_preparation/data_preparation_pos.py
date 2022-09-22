@@ -7,83 +7,28 @@ import logging
 import glob
 from utils.utils import read_conll
 from utils.pos_utils import token_type_model_attr
+# from utils.model_utils import models, transofrmers
 
 
-class MBERTTokenizer(BertTokenizer):
-    def subword_tokenize(self, tokens, labels):
-        # This propogates the label over any subwords that
-        # are created by the byte-pair tokenization for training
+def tokenizer_class_subword_tokenization(value):
+  class TTokenizer(value):
+      def subword_tokenize(self, tokens, labels):
+          # This propogates the label over any subwords that
+          # are created by the byte-pair tokenization for training
 
-        # IMPORTANT: For testing, you will have to undo this step by combining
-        # the subword elements
+          # IMPORTANT: For testing, you will have to undo this step by combining
+          # the subword elements
 
-        split_tokens, split_labels = [], []
-        idx_map = []
-        for ix, token in enumerate(tokens):
-            sub_tokens = self.wordpiece_tokenizer.tokenize(token)
-            for jx, sub_token in enumerate(sub_tokens):
-                split_tokens.append(sub_token)
-                split_labels.append(labels[ix])
-                idx_map.append(ix)
-        return split_tokens, split_labels, idx_map
-
-
-class XLMRTokenizer(XLMRobertaTokenizerFast):
-    def subword_tokenize(self, tokens, labels):
-        # This propogates the label over any subwords that
-        # are created by the byte-pair tokenization for training
-
-        # IMPORTANT: For testing, you will have to undo this step by combining
-        # the subword elements
-
-        split_tokens, split_labels = [], []
-        idx_map = []
-        for ix, token in enumerate(tokens):
-            sub_tokens = self.tokenize(token)
-            for jx, sub_token in enumerate(sub_tokens):
-                split_tokens.append(sub_token)
-                split_labels.append(labels[ix])
-                idx_map.append(ix)
-        return split_tokens, split_labels, idx_map
-
-
-class DisBerTokenizer(DistilBertTokenizer):
-    def subword_tokenize(self, tokens, labels):
-        # This propogates the label over any subwords that
-        # are created by the byte-pair tokenization for training
-
-        # IMPORTANT: For testing, you will have to undo this step by combining
-        # the subword elements
-
-        split_tokens, split_labels = [], []
-        idx_map = []
-        for ix, token in enumerate(tokens):
-            sub_tokens = self.tokenize(token)
-            for jx, sub_token in enumerate(sub_tokens):
-                split_tokens.append(sub_token)
-                split_labels.append(labels[ix])
-                idx_map.append(ix)
-        return split_tokens, split_labels, idx_map
-
-
-class AutoMTokenizer(AutoTokenizer):
-  
-    def subword_tokenize(self, tokens, labels):
-        # This propogates the label over any subwords that
-        # are created by the byte-pair tokenization for training
-
-        # IMPORTANT: For testing, you will have to undo this step by combining
-        # the subword elements
-
-        split_tokens, split_labels = [], []
-        idx_map = []
-        for ix, token in enumerate(tokens):
-            sub_tokens = self.tokenize(token)
-            for jx, sub_token in enumerate(sub_tokens):
-                split_tokens.append(sub_token)
-                split_labels.append(labels[ix])
-                idx_map.append(ix)
-        return split_tokens, split_labels, idx_map
+          split_tokens, split_labels = [], []
+          idx_map = []
+          for ix, token in enumerate(tokens):
+              sub_tokens = self.wordpiece_tokenizer.tokenize(token) if 'wordpiece_tokenizer' in dir(self) else self.tokenize(token)
+              for jx, sub_token in enumerate(sub_tokens):
+                  split_tokens.append(sub_token)
+                  split_labels.append(labels[ix])
+                  idx_map.append(ix)
+          return split_tokens, split_labels, idx_map
+  return TTokenizer
 
 
 def convert_examples_to_tf_dataset(examples, tokenizer, model, tagset, max_length, token_type_ids_input=True):
@@ -94,6 +39,8 @@ def convert_examples_to_tf_dataset(examples, tokenizer, model, tagset, max_lengt
     
     features = []  # -> will hold InputFeatures to be converted later
     token_type_attr = token_type_model_attr(model, max_length)
+    print('token_type_ids', token_type_ids_input)
+    print('token_type_attr', token_type_attr)
 
     for e in examples:
         tokens = e["tokens"]
@@ -126,6 +73,7 @@ def convert_examples_to_tf_dataset(examples, tokenizer, model, tagset, max_lengt
                 )
             )
         else:
+            print('no types')
             features.append(
                 InputFeatures(
                     input_ids=input_ids,
@@ -201,11 +149,12 @@ def load_dataset(lang_path, tokenizer, model, max_length, tagset, dataset_name="
     try:
         dataset = convert_examples_to_tf_dataset(examples=examples, tokenizer=tokenizer, model=model,
                                                             tagset=tagset, max_length=max_length, token_type_ids_input=token_type_ids_input)
-
+        print('yes')
     except:
         dataset = convert_examples_to_tf_dataset(examples=examples, tokenizer=tokenizer, model=model,
                                                         tagset=tagset, max_length=max_length, token_type_ids_input=False)
 
+        print('no')
 
     return examples, dataset
     # This loops 3 times over the same data, including the convert to TF, could it be done in one?
