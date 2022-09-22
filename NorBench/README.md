@@ -219,11 +219,7 @@ The list below describes the models for which it was possible to successfully ob
 
 ### <a name="NER"></a> Named Entitiy Recognition Task
 
-!!! A fully assembled file in the specified format is being finalized (it will be ready by Monday, errors are possible now).
 
-The previous version for this task for `xlm-roberta-base` is located at the [link](https://github.com/sigdelina/NorBench/tree/main/XLM-R%20model/ner), while the version for `bert` is located by the [link](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/bert_ner.py).
-
----
 
 For this task, [script](https://github.com/sigdelina/NorBench/blob/main/NorBench/experiments/ner_finetuning.py) `ner_finetuning.py` should be used.
 
@@ -238,6 +234,7 @@ The input of the model is:
 * `--dataset` - the part of name of the output file
 * `--training_language` - as NER task was analyzed for both Norwegian Bokmål and Norwegian Nynorsk, then `nob` or `nyr` should be used respectively
 * `--epochs` - number of trainable epochs (`20` as default)
+* `--use_seqeval_evaluation` - boolean variable indicating whether to use the seqeval metric during validation (Fasle as default)
 
 
 #### <a name="NER_SCRIPT"></a> Running script
@@ -269,10 +266,31 @@ NOTE: for the current task not F1 score itself is used (not the initial metric).
 
 #### <a name="NER_MODELS"></a>  Models that have been successfully tested on this script
 
+Currently, this script can work with Bert-Like-Models, DistilBert, Xlm-Roberta models and models which are supported by AutoModel.from_pretrained by transormers library (for some models repository with the model files should be installed in the directory before running).
+
+The use of other models in this benchmark is in the process of being resolved.
+
+The list below describes the models for which it was possible to successfully obtain scores until now:
+
+- mBERT: `bert-base-multilingual-cased`
+- XLM-R: `xlm-roberta-base`
+- NorBERT: `ltgoslo/norbert`
+- NorBERT2: `ltgoslo/norbert2`
+- NB-BERT-Base: `NbAiLab/nb-bert-base`
+- Notram: `NbAiLab/notram-bert-norwegian-uncased-080321` -- IN PROGRESS 
+- XLM: `xlm-mlm-100-1280` -- IN PROGRESS was selected to test the possibility of launching via AutoModels
+- Distilbert: `distilbert-base-uncased` -- IN PROGRESS there is little sense in using this model, however, an attempt was made to launch 
+- ScandiBERT: `vesteinn/ScandiBERT` -- the repository with the model files has been downloaded to the directory
+- XLM: `xlm-mlm-100-1280`
+- Bert-Base-En-Fr-De-No-Da-Cased: `Geotrend/bert-base-en-fr-de-no-da-cased` 
+- La/Bse: `La/Bse`
+- Electra-Small-Nordic: `jonfd/electra-small-nordic` --  the repository with the model files has been downloaded to the directory
 
 
 
 ### <a name="RES"></a> Results
+
+
 
 The current section provides information about the scores that was obtained from the following scripts.
 
