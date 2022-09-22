@@ -7,7 +7,6 @@ import logging
 import glob
 from utils.utils import read_conll
 from utils.pos_utils import token_type_model_attr
-# from utils.model_utils import models, transofrmers
 
 
 def tokenizer_class_subword_tokenization(value):
@@ -39,8 +38,6 @@ def convert_examples_to_tf_dataset(examples, tokenizer, model, tagset, max_lengt
     
     features = []  # -> will hold InputFeatures to be converted later
     token_type_attr = token_type_model_attr(model, max_length)
-    print('token_type_ids', token_type_ids_input)
-    print('token_type_attr', token_type_attr)
 
     for e in examples:
         tokens = e["tokens"]
@@ -149,12 +146,10 @@ def load_dataset(lang_path, tokenizer, model, max_length, tagset, dataset_name="
     try:
         dataset = convert_examples_to_tf_dataset(examples=examples, tokenizer=tokenizer, model=model,
                                                             tagset=tagset, max_length=max_length, token_type_ids_input=token_type_ids_input)
-        print('yes')
     except:
         dataset = convert_examples_to_tf_dataset(examples=examples, tokenizer=tokenizer, model=model,
                                                         tagset=tagset, max_length=max_length, token_type_ids_input=False)
 
-        print('no')
 
     return examples, dataset
     # This loops 3 times over the same data, including the convert to TF, could it be done in one?
