@@ -124,9 +124,9 @@ The [final table](http://wiki.nlpl.eu/Vectors/norlm/norbert) includes the result
 
 #### <a name="POS_MODELS"></a>  Models that have been successfully tested on this script
 
-Currently, this script can work with Bert-Like-Models, DistilBert, and Xlm-Roberta models.
+Currently, this script can work with Bert-Like-Models, DistilBert, and Xlm-Roberta models. and models which are supported by AutoModel.from_pretrained by transormers library (for some models repository with the model files should be installed in the directory before running).
 
-The use of other models in this benchmark is in the process of being resolved.
+The use of other models in this benchmark is in the process of being resolved
 
 The list below describes the models for which it was possible to successfully obtain scores until now:
 
@@ -137,7 +137,12 @@ The list below describes the models for which it was possible to successfully ob
 - NB-BERT-Base: `NbAiLab/nb-bert-base`
 - Notram: `NbAiLab/notram-bert-norwegian-uncased-080321`
 - Distilbert: `distilbert-base-uncased` -- there is little sense in using this model, however, an attempt was made to launch 
-- ScandiBERT: `vesteinn/ScandiBERT` -- IN PROGRESS
+- ScandiBERT: `vesteinn/ScandiBERT` -- the repository with the model files has been downloaded to the directory
+- XLM: `xlm-mlm-100-1280` -- RUNNING
+- Bert-Base-En-Fr-De-No-Da-Cased: `Geotrend/bert-base-en-fr-de-no-da-cased` 
+- La/Bse: `La/Bse`
+- Electra-Small-Nordic: `jonfd/electra-small-nordic` -- IN PROGRESS (the repository with the model files has been downloaded to the directory)
+
 
 ---
 
@@ -190,7 +195,7 @@ The [final table](http://wiki.nlpl.eu/Vectors/norlm/norbert) includes the result
 
 #### <a name="BINARYSENT_MODELS"></a>  Models that have been successfully tested on this script
 
-Currently, this script can work with Bert-Like-Models, DistilBert, Xlm-Roberta models and models which are supported by AutoModel.from_pretrained by transormers library.
+Currently, this script can work with Bert-Like-Models, DistilBert, Xlm-Roberta models and models which are supported by AutoModel.from_pretrained by transormers library (for some models repository with the model files should be installed in the directory before running).
 
 The use of other models in this benchmark is in the process of being resolved.
 
@@ -204,7 +209,11 @@ The list below describes the models for which it was possible to successfully ob
 - Notram: `NbAiLab/notram-bert-norwegian-uncased-080321`
 - XLM: `xlm-mlm-100-1280` -- was selected to test the possibility of launching via AutoModels
 - Distilbert: `distilbert-base-uncased` -- there is little sense in using this model, however, an attempt was made to launch 
-- ScandiBERT: `vesteinn/ScandiBERT` -- IN PROGRESS
+- ScandiBERT: `vesteinn/ScandiBERT` -- the repository with the model files has been downloaded to the directory
+- XLM: `xlm-mlm-100-1280`
+- Bert-Base-En-Fr-De-No-Da-Cased: `Geotrend/bert-base-en-fr-de-no-da-cased` 
+- La/Bse: `La/Bse` -- IN PROGRESSS
+- Electra-Small-Nordic: `jonfd/electra-small-nordic` -- IN PROGRESS (the repository with the model files has been downloaded to the directory)
 
 ---
 
@@ -272,6 +281,6 @@ The current section provides information about the scores that was obtained from
 |---|---|---|---|---|---|---|---|---|---|---|---|
 |Part-of-Speech tagging Bokmål (accuracy)|	97.8|	97.6|	98.3|	98.3|	98.6|	95.3|||97.2||97.8 |
 |Part-of-Speech tagging Nynorsk (accuracy)|	97.5|	97.3|	98.1|	97.8|	98.1|	94.8|95.8||97.6||97.4|
-|Binary sentiment analysis (F1 score)|	70.0|	77.5	|79.3|	84.2|	84.0|65.8	|83.2||81.1|||
-|NER Bokmål (F1 score)|	79.6|84.5|86.5	|85.8	|	|	|||88.7|||
-|NER Nynorsk (F1 score)|	84.8|	86.6|	85.6| 82.4	|	89.0 |	|||88.2|||
+|Binary sentiment analysis (F1 score)|	70.0|	77.5	|79.3|	84.2|	84.0|65.8	|83.2|67.6|81.1|||
+|NER Bokmål (F1 score)|	79.6|84.5|86.5	|85.8	|	89.0|	|||88.7|84.2|78.6|
+|NER Nynorsk (F1 score)|	84.8|	86.6|	85.6| 82.4	|	89.0 |	|||88.2|83.2||
