@@ -4,10 +4,7 @@ import argparse
 import numpy as np
 import pandas as pd
 import data_preparation.data_preparation_pos as data_preparation_pos
-# from fine_tuning import *
 import fine_tuning
-
-# import xlmr_ner_autotrainer as ner_autotrain
 import utils.model_utils as model_utils
 import utils.pos_utils as pos_utils
 
@@ -43,7 +40,6 @@ def test(training_lang,
     trainer.setup_eval(test_data, split)
     test_dataset, test_batches = model_utils.make_batches(test_dataset, eval_batch_size,
                                                           repetitions=1, shuffle=False)
-    # return trainer, test_data, test_dataset, test_batches
     test_preds = trainer.handle_oom(trainer.model.predict,
                                     test_dataset,
                                     steps=test_batches,
@@ -87,7 +83,7 @@ def train(training_lang, short_model_name="ltgoslo/norbert",
             print("...")
             break
         print("{:<25}{:<20}".format(trainer.tokenizer.decode(int(token)), tagset[label]))
-    #
+
     try:
         trainer.setup_training()
         trainer.train()
@@ -115,7 +111,7 @@ def setup_eval(data, tokenizer, label_map, max_length, dataset_name="test"):
     eval_info[dataset_name]["real_tokens"] = []
     eval_info[dataset_name]["subword_locs"] = []
     acc_lengths = 0
-    #
+
     for i in range(len(data)):
         eval_info[dataset_name]["all_words"].extend(data[i]["tokens"])  # Full words
         eval_info[dataset_name]["all_labels"].extend(
