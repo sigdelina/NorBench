@@ -2,6 +2,9 @@
 
 import tensorflow as tf
 import sentencepiece
+import re
+import importlib
+import transformers
 from transformers import (TFBertForSequenceClassification, BertTokenizer, AutoTokenizer,
                           TFXLMRobertaForSequenceClassification, XLMRobertaTokenizer, TFAutoModelForSequenceClassification,
                           TFBertForTokenClassification, TFXLMRobertaForTokenClassification, TFAutoModelForTokenClassification,
@@ -31,19 +34,19 @@ models = {
 
 tokenizers = {
     "bert": {
-        "pos": MBERTTokenizer.from_pretrained,
+        "pos": tokenizer_class_subword_tokenization(BertTokenizer).from_pretrained,
         "sentiment": BertTokenizer.from_pretrained
     },
     "xlm-roberta": {
-        "pos": XLMRTokenizer.from_pretrained,
+        "pos": tokenizer_class_subword_tokenization(XLMRobertaTokenizerFast).from_pretrained,
         "sentiment": XLMRobertaTokenizer.from_pretrained
     },
     "distilbert": {
-        "pos": DisBerTokenizer.from_pretrained,
+        "pos": tokenizer_class_subword_tokenization(DistilBertTokenizer).from_pretrained,
         "sentiment": DistilBertTokenizer.from_pretrained
     },
     "auto": {
-        "pos": AutoMTokenizer.from_pretrained,
+        "pos": tokenizer_class_subword_tokenization(AutoTokenizer).from_pretrained,
         "sentiment": AutoTokenizer.from_pretrained
     }
 }
@@ -89,8 +92,8 @@ def get_name_from_dict_keys(short_model_name, d=model_names):
     elif short_model_name in d.values():
         reverse_lookup = dict([(val, key) for key, val in d.items()])
         short_name = reverse_lookup[short_model_name]
-
-    if 'roberta' in short_name:
+    
+    if 'roberta' in short_name or 'scandibert' in short_name.lower():
       return "xlm-roberta"
     elif 'distilbert' in short_name:
       return 'distilbert'
@@ -100,10 +103,34 @@ def get_name_from_dict_keys(short_model_name, d=model_names):
       return 'auto'
 
 
+def get_relevant_auto_tokenizer_func(model):
+
+    mod_class = model.__class__
+    get_mod = re.search(r'(transformers\.models\.[Aa-zZ|_]+)\.', str(mod_class), re.DOTALL)
+
+    attr_list_for_model = dir(importlib.import_module(get_mod.group(1)))
+
+    tokenizers = [tok for tok in attr_list_for_model if 'Tokenizer' in tok]
+    return getattr(importlib.import_module(get_mod.group(0)[:-1]), tokenizers[0])
+
+
 def create_model(short_model_name, task, num_labels, from_pt=False):
     short_name = get_name_from_dict_keys(short_model_name)
-    model = models[short_name][task](get_full_model_names(short_model_name), num_labels=num_labels)
-    tokenizer = get_tokenizer(short_model_name, short_name, task)
+
+    try:
+      model = models[short_name][task](get_full_model_names(short_model_name), num_labels=num_labels)
+    except:
+      model = models[short_name][task](get_full_model_names(short_model_name), num_labels=num_labels, from_pt = True)
+    
+    if short_name == "auto" and task == "pos":
+      tokenizer_class = get_relevant_auto_tokenizer_func(model)
+      try:
+        tokenizer = tokenizer_class_subword_tokenization(tokenizer_class).from_pretrained(get_full_model_names(short_model_name))
+      except:
+        tokenizer = tokenizer_class_subword_tokenization(tokenizer_class).from_pretrained(get_full_model_names(short_model_name), do_lower_case)
+    else:
+      tokenizer = get_tokenizer(short_model_name, short_name, task)
+
     return model, tokenizer
 
 
