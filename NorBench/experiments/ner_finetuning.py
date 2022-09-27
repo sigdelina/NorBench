@@ -67,7 +67,7 @@ def get_predictions(trainer, tokenized_data, tagset=tagset):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_type", default="bert")
+    parser.add_argument("--model_type", default="auto")
     parser.add_argument("--model_name", default="ltgoslo/norbert")
     parser.add_argument("--dataset", default="norne_nob")
     parser.add_argument("--training_language", default="nob")
@@ -104,6 +104,7 @@ if __name__ == "__main__":
     adam_epsilon = 1e-08  # param {type: "number"}
     max_grad_norm = 1.0  # param {type: "number"}
     num_warmup_steps = 750  # @param {type: "number"}
+    save_strategy = 'epoch'
     save_total_limit = 1  # param {type: "integer"}
     load_best_model_at_end = True  # @param {type: "boolean"}
 
@@ -145,6 +146,7 @@ if __name__ == "__main__":
         warmup_steps=num_warmup_steps,
         load_best_model_at_end=load_best_model_at_end,
         seed=seed,
+        save_strategy=save_strategy,
         save_total_limit=save_total_limit,
     )
 
@@ -232,4 +234,4 @@ if __name__ == "__main__":
 
     print(table)
     print(table.to_latex(index=False, float_format="{0:.5f}".format))
-    table.to_csv("results/{}_ner.tsv".format(model_name), sep="\t")
+    table.to_csv("results/{}_ner.tsv".format(model_name.replace('/','_')), sep="\t")
