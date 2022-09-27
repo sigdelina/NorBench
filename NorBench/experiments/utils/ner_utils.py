@@ -13,7 +13,6 @@ models_type = {
             "norbert": "ltgoslo/norbert",
             "norbert2": "ltgoslo/norbert2",
             "nb-bert-base": "NbAiLab/nb-bert-base",
-            "scandibert": "vesteinn/ScandiBERT",
         }
     },
     "roberta": {
