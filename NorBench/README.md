@@ -227,14 +227,15 @@ For this task, [script](https://github.com/sigdelina/NorBench/blob/main/NorBench
 
 The input of the model is: 
 
-* `--model_type` - type of the model that one want to run (`bert`, `roberta`)
+
 * `--model_name` - the name of the model can be presented in several ways.
   +  in get_full_model_names, the user can add a convenient abbreviation for the model name (if a specific model is not yet in the list): `xlm-roberta`
   + the model name can be submitted as a full model name mentinoed in transformer library: `xlm-roberta-base`
-* `--dataset` - the part of name of the output file
+* `--run_model_name` - the name of the model with which the user intends to save the output file
 * `--training_language` - as NER task was analyzed for both Norwegian Bokmål and Norwegian Nynorsk, then `nob` or `nyr` should be used respectively
 * `--epochs` - number of trainable epochs (`20` as default)
 * `--use_seqeval_evaluation` - boolean variable indicating whether to use the seqeval metric during validation (Fasle as default)
+* `--model_type` - optional argument (type of the model that one wants to run (`bert`, `roberta`)), however, if the user type does not know about the model type, the decision will be made automatically, so one can skip this argument
 
 
 #### <a name="NER_SCRIPT"></a> Running script
