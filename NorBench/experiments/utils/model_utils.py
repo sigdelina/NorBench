@@ -4,7 +4,6 @@ import tensorflow as tf
 import sentencepiece
 import re
 import importlib
-import transformers
 from transformers import (TFBertForSequenceClassification, BertTokenizer, AutoTokenizer,
                           TFXLMRobertaForSequenceClassification, XLMRobertaTokenizer, TFAutoModelForSequenceClassification,
                           TFBertForTokenClassification, TFXLMRobertaForTokenClassification, TFAutoModelForTokenClassification,
@@ -107,11 +106,16 @@ def get_relevant_auto_tokenizer_func(model):
 
     mod_class = model.__class__
     get_mod = re.search(r'(transformers\.models\.[Aa-zZ|_]+)\.', str(mod_class), re.DOTALL)
-
+    get_mod_for_tokenizer = re.search(r'TF(.+)ForTokenClassification', str(mod_class), re.DOTALL)
     attr_list_for_model = dir(importlib.import_module(get_mod.group(1)))
 
-    tokenizers = [tok for tok in attr_list_for_model if 'Tokenizer' in tok]
-    return getattr(importlib.import_module(get_mod.group(0)[:-1]), tokenizers[0])
+    if get_mod_for_tokenizer != None:
+      tokenizers = [tok for tok in attr_list_for_model if 'Tokenizer' in tok and get_mod_for_tokenizer.group(1) in tok]
+      return getattr(importlib.import_module(get_mod.group(0)[:-1]), tokenizers[0])
+    
+    else:
+      tokenizers = [tok for tok in attr_list_for_model if 'Tokenizer' in tok]
+      return getattr(importlib.import_module(get_mod.group(0)[:-1]), tokenizers[0])
 
 
 def create_model(short_model_name, task, num_labels, from_pt=False):
