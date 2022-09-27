@@ -19,17 +19,16 @@ set -o nounset
 
 module purge
 module use -a /cluster/shared/nlpl/software/eb/etc/all
-module load nlpl-scipy-ecosystem/2021.01-gomkl-2019b-Python-3.7.4
-module load nlpl-transformers/4.5.1-gomkl-2019b-Python-3.7.4
-module load nlpl-nlptools/2021.01-gomkl-2019b-Python-3.7.4
-module load nlpl-datasets/1.17-gomkl-2019b-Python-3.7.4
-module load sentencepiece/0.1.96-gomkl-2019b-Python-3.7.4
+module load nlpl-scipy-ecosystem/2022.01-gomkl-2021a-Python-3.9.5
+module load nlpl-transformers/4.20.1-gomkl-2021a-Python-3.9.5
+module load nlpl-nlptools/2022.01-gomkl-2021a-Python-3.9.5
+module load nlpl-datasets/2.3.2-gomkl-2021a-Python-3.9.5
+module load nlpl-sentencepiece/0.1.96-gomkl-2021a-Python-3.9.5
 
 # print information (optional)
 echo "submission directory: ${SUBMITDIR}"
 #ulimit -a
 #module list
-module load nlpl-datasets/1.17-gomkl-2019b-Python-3.7.4
 
 # by default, pass on any remaining command-line options
 python3 sentiment_finetuning.py --model_name "nb-bert-base" --short_model_name "nb-bert-base" --training_language "no" --epochs 10
