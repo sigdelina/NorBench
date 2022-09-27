@@ -69,7 +69,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_type", default="auto")
     parser.add_argument("--model_name", default="ltgoslo/norbert")
-    parser.add_argument("--dataset", default="norne_nob")
+    parser.add_argument("--run_model_name", default="norne_nob")
     parser.add_argument("--training_language", default="nob")
     parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--use_seqeval_evaluation", type=bool, default=False)
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
     model_type =  args.model_type 
     model_name = args.model_name
-    dataset_name = args.dataset
+    dataset_name = args.run_model_name
     task_name = "ner"
     training_language = args.training_language
     lang_path = ner_data_path + training_language + "/"
@@ -123,7 +123,6 @@ if __name__ == "__main__":
     else:
         model = AutoModelForTokenClassification.from_pretrained(model_name, num_labels=len(tagset))
         tokenizer = AutoTokenizer.from_pretrained(model_name)
-    
     # Load the dataset
     tokenized_data, data_collator = data_preparation_ner.collecting_data(tokenizer, lang_path)
 
@@ -234,4 +233,5 @@ if __name__ == "__main__":
 
     print(table)
     print(table.to_latex(index=False, float_format="{0:.5f}".format))
-    table.to_csv("results/{}_ner.tsv".format(model_name.replace('/','_')), sep="\t")
+    table.to_csv("results/{}_ner.tsv".format(model_name.replace('/', '_')), sep="\t")
+ 
