@@ -176,4 +176,4 @@ if __name__ == "__main__":
 
     print(table)
     print(table.to_latex(index=False, float_format="{0:.1f}".format))
-    table.to_csv("results/{}_sentiment.tsv".format(model_name), sep="\t")
+    table.to_csv("results/{}_sentiment.tsv".format(model_name.replace('/','_')), sep="\t")
