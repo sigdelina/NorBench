@@ -185,6 +185,6 @@ if __name__ == "__main__":
                           })
 
     print(table)
-    print(table.to_latex(index=False, float_format="{0:.1f}".format))
+    print(table.style.hide(axis='index').to_latex())
     table.to_csv(f"results/{training_language}_{run_name}_{current_task}.tsv", sep="\t")
     print(f"Scores saved to results/{training_language}_{run_name}_{current_task}.tsv")

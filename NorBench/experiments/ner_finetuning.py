@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 from transformers import XLMRobertaTokenizer, XLMRobertaForTokenClassification, XLMRobertaTokenizerFast, DataCollatorForTokenClassification, Trainer, TrainingArguments
 import argparse
 import pandas as pd
@@ -22,7 +24,7 @@ import warnings
 from conllu import parse
 warnings.filterwarnings("ignore")
 
-
+os.environ["TOKENIZERS_PARALLELISM"] = "true"
 tagset = data_preparation_ner.tagset
 
 
@@ -95,8 +97,8 @@ if __name__ == "__main__":
 
     # Training
     num_train_epochs = args.epochs  # @param {type: "number"}
-    per_device_train_batch_size = 8  # param {type: "integer"}
-    per_device_eval_batch_size = 8  # param {type: "integer"}
+    per_device_train_batch_size = 16  # param {type: "integer"}
+    per_device_eval_batch_size = 32  # param {type: "integer"}
     learning_rate = 3e-05  # @param {type: "number"}
     weight_decay = 0.0  # param {type: "number"}
     adam_beta1 = 0.9  # param {type: "number"}
@@ -108,8 +110,7 @@ if __name__ == "__main__":
     save_total_limit = 1  # param {type: "integer"}
     load_best_model_at_end = True  # @param {type: "boolean"}
 
-    output_dir = model_name.split("/")[-1] + "_" + dataset_name + "_" \
-                 + str(per_device_train_batch_size)
+    output_dir = dataset_name + "_" + str(per_device_train_batch_size)
     overwrite_output_dir = False
 
     """# Initialize Training"""
@@ -208,10 +209,10 @@ if __name__ == "__main__":
 
     # print(f"Scores on test dataset: {predictions}")
 
-    print('PREPARING TO SAVE PREDITIONS')
+    print('PREPARING TO SAVE PREDICTIONS')
 
     path_to_test = glob.glob(lang_path + "/*{}.conllu".format('test'.split("_")[0]))[0]
-    path_to_preditions = lang_path+"predicted_{}_{}.conllu".format(training_language, model_name.replace('/', '_'))
+    path_to_predictions = lang_path+"predicted_{}_{}.conllu".format(training_language, model_name.replace('/', '_'))
 
     test_conll = parse(open(path_to_test, "r").read())
 
@@ -219,19 +220,19 @@ if __name__ == "__main__":
         for tk_num, token in enumerate(sentence):
             token["misc"]["name"] = real_predictions[nr][tk_num]
 
-    with open(path_to_preditions, "w") as f:
+    with open(path_to_predictions, "w") as f:
         for sentence in test_conll:
             f.write(sentence.serialize())
     print('Saving file')
 
     print('Scores:')
-    test_results = evaluate_ner.evaluation(path_to_preditions, path_to_test)
+    test_results = evaluate_ner.evaluation(path_to_predictions, path_to_test)
 
     table = pd.DataFrame({"Train Lang": training_language,
                           "Test F1": [test_results]
                           })
 
     print(table)
-    print(table.to_latex(index=False, float_format="{0:.5f}".format))
-    table.to_csv("results/{}_ner.tsv".format(model_name.replace('/', '_')), sep="\t")
- 
+    print(table.style.hide(axis='index').to_latex())
+    table.to_csv("results/{}_ner.tsv".format(dataset_name.replace('/', '_')), sep="\t")
+

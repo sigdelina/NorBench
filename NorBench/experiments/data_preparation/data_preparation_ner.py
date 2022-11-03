@@ -17,7 +17,7 @@ def load_dataset_ner(lang_path, dataset_name="test"):
     data = read_conll(glob.glob(lang_path + "/*{}.conllu".format(dataset_name.split("_")[0]))[0], label_nr=9)
     examples = [{"id": sent_id, "tokens": tokens, "ner_tags": [tag.split("|")[-1].split('=')[1] for tag in tags]} for sent_id, tokens, tags in
                 zip(data[0], data[1], data[2])]
-    
+
     return examples
 
 
@@ -41,5 +41,5 @@ def collecting_data(tokenizer, path):
                                 'test': Dataset.from_dict({'id': te_ids,'tokens': te_tokens, 'tags': te_tags})})
 
     tokenized_data = data.map(ner_utils.tokenize_and_align_labels, fn_kwargs={'tokenizer': tokenizer}, batched=True)
-    
+
     return tokenized_data, data_collator

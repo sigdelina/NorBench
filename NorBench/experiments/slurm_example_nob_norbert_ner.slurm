@@ -31,4 +31,4 @@ echo "submission directory: ${SUBMITDIR}"
 #module list
 
 # by default, pass on any remaining command-line options
-python3 ner_finetuning.py --model_type "bert" --model_name "norbert" --dataset "norne_nob" --training_language "nob" --epochs 20
+python3 ner_finetuning.py --model_type "bert" --model_name "norbert" --run_model_name "norne_nob" --training_language "nob" --epochs 20

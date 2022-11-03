@@ -175,5 +175,5 @@ if __name__ == "__main__":
                           })
 
     print(table)
-    print(table.to_latex(index=False, float_format="{0:.1f}".format))
+    print(table.style.hide(axis='index').to_latex())
     table.to_csv("results/{}_sentiment.tsv".format(model_name.replace('/','_')), sep="\t")

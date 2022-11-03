@@ -7,7 +7,7 @@ from copy import deepcopy
 logging.basicConfig(
     format="%(asctime)s %(name)s %(levelname)s: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
-    level="DEBUG",
+    level="INFO",
 )
 
 Entity = namedtuple("Entity", "e_type start_offset end_offset")
